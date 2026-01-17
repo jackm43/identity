@@ -83,20 +83,22 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ---
 
-### 2.3 GitHub OIDC Provider [NOT STARTED]
+### 2.3 GitHub OIDC Provider [PARTIAL - Manual Steps Remaining]
 **Spec:** [specs/kratos.md](specs/kratos.md)
 
-**Note:** `kratos/oidc/github_mapper.jsonnet` was created as part of 2.2. GitHub OAuth App must be created manually.
-
-- [ ] Create GitHub OAuth App:
-  - Homepage: `https://auth.jsmunro.me`
-  - Callback: `https://auth.jsmunro.me/self-service/methods/oidc/callback/github`
-- [ ] Add to `kratos.yml` oidc providers:
+**Code Configuration (DONE):**
+- [x] Add to `kratos.yml` oidc providers:
   - provider: github
   - client_id/client_secret (from .env)
   - scopes: [user:email]
   - mapper_url (base64 Jsonnet for email mapping)
-- [ ] `kratos/oidc/github.jsonnet` - map email_primary to traits.email
+- [x] `kratos/oidc/github_mapper.jsonnet` - map email_primary to traits.email
+
+**Manual Steps (NOT STARTED):**
+- [ ] Create GitHub OAuth App:
+  - Homepage: `https://auth.jsmunro.me`
+  - Callback: `https://auth.jsmunro.me/self-service/methods/oidc/callback/github`
+- [ ] Add GitHub OAuth credentials to `.env` (GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET)
 
 **Tests:**
 - Login page shows "Sign in with GitHub"
@@ -107,16 +109,19 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ## Phase 3: Networking & Security
 
-### 3.1 Cloudflare Tunnel [NOT STARTED]
+### 3.1 Cloudflare Tunnel [PARTIAL - Manual Steps Remaining]
 **Spec:** [specs/networking.md](specs/networking.md)
 
-- [ ] Create Cloudflare Tunnel via dashboard or CLI
-- [ ] Store tunnel credentials at `/opt/identity/cloudflared/`
-- [ ] Add `cloudflared` service to docker-compose.yml
-- [ ] `cloudflared/config.yml`:
+**Infrastructure Configuration (DONE):**
+- [x] Add `cloudflared` service to docker-compose.yml
+- [x] `cloudflared/config.yml`:
   - Ingress: `auth.jsmunro.me` → `http://kratos:4433`
   - Ingress: `login.jsmunro.me` → `http://kratos-ui:4455`
   - Default: 404
+
+**Manual Steps (NOT STARTED):**
+- [ ] Create Cloudflare Tunnel via dashboard or CLI
+- [ ] Store tunnel credentials at `/opt/identity/cloudflared/`
 - [ ] DNS CNAME records in Cloudflare
 
 **Tests:**
@@ -142,13 +147,16 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ## Phase 4: Identity & Integration
 
-### 4.1 Seed Identity [NOT STARTED]
+### 4.1 Seed Identity [PARTIAL - Manual Steps Remaining]
 **Spec:** [specs/kratos.md](specs/kratos.md)
 
-- [ ] `scripts/seed_identity.sh`:
+**Script (DONE):**
+- [x] `scripts/seed_identity.sh`:
   - Create identity for jack@jsmunro.me via Admin API
   - Set email as verified
   - Idempotent (skip if exists)
+
+**Manual Steps (NOT STARTED):**
 - [ ] Document Admin API access (SSH tunnel or local only)
 
 **Tests:**
@@ -214,3 +222,4 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 - **Admin API:** Bind to localhost/docker network only, never expose publicly
 - **Cookie domain:** Use `.jsmunro.me` for cross-subdomain auth
 - **Oathkeeper:** Required for protecting non-Kratos services (Phase 4.2)
+- **Manual Configuration Required:** GitHub OIDC (2.3) and Cloudflare Tunnel (3.1) require manual steps that cannot be automated (OAuth app creation in GitHub, tunnel creation via Cloudflare dashboard/CLI)

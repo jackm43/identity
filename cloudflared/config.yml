@@ -1,0 +1,6 @@
+ingress:
+  - hostname: auth.jsmunro.me
+    service: http://kratos:4433
+  - hostname: login.jsmunro.me
+    service: http://kratos-ui:3000
+  - service: http_status:404
