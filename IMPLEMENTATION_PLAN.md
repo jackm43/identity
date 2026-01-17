@@ -44,16 +44,16 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ## Phase 2: Kratos Core
 
-### 2.1 Docker Compose Setup [NOT STARTED]
+### 2.1 Docker Compose Setup [DONE]
 **Spec:** [specs/kratos.md](specs/kratos.md)
 
-- [ ] `deploy/docker-compose.yml` with services:
+- [x] `deploy/docker-compose.yml` with services:
   - `postgres` (PostgreSQL 15, persistent volume)
   - `kratos-migrate` (one-shot migration job)
   - `kratos` (public:4433, admin:4434 internal only)
   - `kratos-ui` (self-service UI on port 4455)
-- [ ] `.env` with: `POSTGRES_PASSWORD`, `KRATOS_ADMIN_SECRET`, `KRATOS_SECRETS_COOKIE`, `KRATOS_SECRETS_CIPHER`
-- [ ] Volumes for Postgres data and Kratos config
+- [x] `.env` with: `POSTGRES_PASSWORD`, `KRATOS_ADMIN_SECRET`, `KRATOS_SECRETS_COOKIE`, `KRATOS_SECRETS_CIPHER`
+- [x] Volumes for Postgres data and Kratos config
 
 **Tests:**
 - `docker compose up -d` all containers healthy
@@ -62,17 +62,17 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ---
 
-### 2.2 Kratos Configuration [NOT STARTED]
+### 2.2 Kratos Configuration [DONE]
 **Spec:** [specs/kratos.md](specs/kratos.md)
 
-- [ ] `kratos/kratos.yml`:
+- [x] `kratos/kratos.yml`:
   - DSN: `postgres://kratos:${POSTGRES_PASSWORD}@postgres:5432/kratos?sslmode=disable`
   - `serve.public.base_url`: `https://auth.jsmunro.me`
   - `serve.admin.base_url`: `http://kratos:4434` (internal)
   - Self-service flow URLs (login, registration, settings, recovery, verification)
   - Session cookie settings (domain: `.jsmunro.me`, secure: true)
   - CORS for UI origin
-- [ ] `kratos/identity.schema.json`:
+- [x] `kratos/identity.schema.json`:
   - Email trait (identifier, verification, recovery)
   - Name traits (first, last)
 
@@ -85,6 +85,8 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 
 ### 2.3 GitHub OIDC Provider [NOT STARTED]
 **Spec:** [specs/kratos.md](specs/kratos.md)
+
+**Note:** `kratos/oidc/github_mapper.jsonnet` was created as part of 2.2. GitHub OAuth App must be created manually.
 
 - [ ] Create GitHub OAuth App:
   - Homepage: `https://auth.jsmunro.me`
