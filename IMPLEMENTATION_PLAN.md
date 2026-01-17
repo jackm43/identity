@@ -116,7 +116,7 @@ Self-hosted Ory Kratos IAM on AWS EC2 with GitHub OIDC, Cloudflare Tunnel, and h
 - [x] Add `cloudflared` service to docker-compose.yml
 - [x] `cloudflared/config.yml`:
   - Ingress: `auth.jsmunro.me` → `http://kratos:4433`
-  - Ingress: `login.jsmunro.me` → `http://kratos-ui:4455`
+  - Ingress: `login.jsmunro.me` → `http://kratos-ui:3000` (container internal port)
   - Default: 404
 
 **Manual Steps (NOT STARTED):**

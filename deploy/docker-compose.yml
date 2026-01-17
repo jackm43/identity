@@ -36,9 +36,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ../kratos:/etc/config/kratos:ro
-    ports:
-      - "4433:4433"
     expose:
+      - "4433"
       - "4434"
     depends_on:
       kratos-migrate:
