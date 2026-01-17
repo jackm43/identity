@@ -1,0 +1,33 @@
+# Environment and secrets
+.env
+*.env
+!.env.example
+
+# SSH keys
+*.pem
+*.key
+
+# Cloudflare tunnel credentials
+cloudflared/*.json
+cloudflared/cert.pem
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.tfvars
+!*.tfvars.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
